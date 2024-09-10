@@ -2,11 +2,12 @@ import requests
 import os
 import zipfile
 
-# Constants for Canvas API
+# Canvas API
 API_URL = 'https://canvas.lms.unimelb.edu.au/api/v1'
 API_TOKEN = '14227~6cC9BMJ34CDZ6FuwZwCyRyYeyP6CCUBcwV3UxP3LvvQDvaBE2XWWP6NchLBUeYQ7' 
 COURSE_ID = '188486' 
 
+# List of Files to Download
 FILE_LIST = ['project-2-bnpl-tables-part1.zip', 
     'project-2-bnpl-tables-part2.zip', 
     'project-2-bnpl-tables-part3.zip', 
