@@ -4,7 +4,7 @@ import zipfile
 
 # Canvas API
 API_URL = 'https://canvas.lms.unimelb.edu.au/api/v1'
-API_TOKEN = '14227~6cC9BMJ34CDZ6FuwZwCyRyYeyP6CCUBcwV3UxP3LvvQDvaBE2XWWP6NchLBUeYQ7' 
+API_TOKEN = 'YOUR_API_TOKEN'
 COURSE_ID = '188486' 
 
 # List of Files to Download
