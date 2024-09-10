@@ -1,80 +1,90 @@
 import requests
-from bs4 import BeautifulSoup
+import os
+import zipfile
 
-# Function to load the modules page directly
-def load_modules_page(session, modules_url):
-    # Step 1: Load the modules page
-    response = session.get(modules_url)
-    response.raise_for_status()  # Ensure the request was successful
-    
-    print("Navigated to modules page.")
+# Constants for Canvas API
+API_URL = 'https://canvas.lms.unimelb.edu.au/api/v1'
+API_TOKEN = '14227~6cC9BMJ34CDZ6FuwZwCyRyYeyP6CCUBcwV3UxP3LvvQDvaBE2XWWP6NchLBUeYQ7' 
+COURSE_ID = '188486' 
 
-    print(response.text)  # Print the entire HTML content of the page
-    
-    return response.text
+FILE_LIST = ['project-2-bnpl-tables-part1.zip', 
+    'project-2-bnpl-tables-part2.zip', 
+    'project-2-bnpl-tables-part3.zip', 
+    'project-2-bnpl-tables-part4.zip']
 
-# Function to download files from the modules page
-def download_files_from_modules(session, modules_url, download_dir, base_url):
-    response = session.get(modules_url)
-    response.raise_for_status()
+# Headers for the API request
+headers = {
+    'Authorization': f'Bearer {API_TOKEN}'
+}
+
+def get_files_from_course(course_id):
+    # API endpoint for course files
+    url = f'{API_URL}/courses/{course_id}/files'
+    all_files = []
     
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Find all file download links
-    file_titles = ["Buy Now, Pay Later Data (Part 1)", 
-                   "Buy Now, Pay Later Data (Part 2)", 
-                   "Buy Now, Pay Later Data (Part 3)", 
-                   "Buy Now, Pay Later Data (Part 4)"]
-    
-    for file_title in file_titles:
-        # Try to find the link using the title attribute and class
-        file_link = soup.find('a', title=file_title, class_="ig-title title item_link")
+    while url:
+        response = requests.get(url, headers=headers)
         
-        if file_link:
-            file_url = file_link['href']
-            if not file_url.startswith("http"):
-                file_url = base_url + file_url  # Construct the full URL
+        if response.status_code == 200:
+            files = response.json()
+            all_files.extend(files)
             
-            # Navigate to the file item page
-            item_page_response = session.get(file_url)
-            item_soup = BeautifulSoup(item_page_response.text, 'html.parser')
-            
-            # Find the actual download link within the item page
-            download_link = item_soup.find('a', {'download': 'true'})
-            
-            if download_link:
-                download_url = download_link['href']
-                if not download_url.startswith("http"):
-                    download_url = base_url + download_url  # Construct the full download URL
-                
-                # Download the file
-                file_name = download_url.split('/')[-1]
-                file_response = session.get(download_url)
-                with open(f"{download_dir}/{file_name}", 'wb') as f:
-                    f.write(file_response.content)
-                
-                print(f"Downloaded: {file_name}")
+            # Check if there is a "next" page
+            if 'next' in response.links:
+                url = response.links['next']['url']
             else:
-                print(f"Download link not found for {file_title}.")
+                url = None
         else:
-            print(f"File {file_title} not found.")
-
-# Main ETL process function
-def etl_process():
-    # URLs and session
-    base_url = "https://canvas.lms.unimelb.edu.au"
-    modules_url = f"{base_url}/courses/188486/modules"  # Full URL to modules page
-
-    session = requests.Session()  # Ensure the session is authenticated
+            print(f'Failed to get files: {response.status_code}')
+            break
     
-    download_dir = '../data/tables'  # Directory to save downloaded files
-    
-    # Step 1: Load the modules page directly
-    modules_page_html = load_modules_page(session, modules_url)
-    
-    # Step 2: Download files from the Modules page
-    download_files_from_modules(session, modules_url, download_dir, base_url)
+    return all_files
 
-# Execute the ETL process
-if __name__ == "__main__":
-    etl_process()
+def unzip_file(zip_path, extract_to):
+    # Unzip the file to the specified directory
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+        print(f'File {zip_path} unzipped successfully.')
+    
+    # Optional: remove the ZIP file after extraction
+    os.remove(zip_path)
+    print(f'File {zip_path} removed after extraction.')
+
+def download_file(file_url, file_name, download_folder):
+    # Download a file from a URL
+    response = requests.get(file_url, headers=headers)
+    
+    if response.status_code == 200:
+        file_path = os.path.join(download_folder, file_name)
+        with open(file_path, 'wb') as file:
+            file.write(response.content)
+        print(f'File {file_name} downloaded successfully.')
+        
+        # If it's a ZIP file, unzip it
+        if file_name.endswith('.zip'):
+            unzip_file(file_path, download_folder)
+            
+    else:
+        print(f'Failed to download {file_name}: {response.status_code}')
+
+def main():
+    download_folder = 'data'  # Folder to save downloaded files
+    
+    # Create folder if it doesn't exist
+    if not os.path.exists(download_folder):
+        os.makedirs(download_folder)
+    
+    # Get list of files from the course
+    files = get_files_from_course(COURSE_ID)
+    
+    if files:
+        for file in files:
+            file_name = file['display_name']
+            
+            # Only download if the file is in the specific list
+            if file_name in FILE_LIST:
+                file_url = file['url']
+                download_file(file_url, file_name, download_folder)
+            
+if __name__ == '__main__':
+    main()
