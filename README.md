@@ -27,10 +27,13 @@ pip install -r requirements.txt
 Python ver 3.11.5 was used in building this code.
 
 # Pipeline
-To run the pipeline please visit the **scripts** directory and go to **init.py**. Before running the code, please insert your Canvas API key in the API_TOKEN variable, to allow access to the data uploaded within the MAST30034 LMS page.
-Please run the following notebooks sequentially.
+To run the pipeline please run the following notebooks sequentially.
 
-First, please visit the **notebooks** directory, then run:
+First, please visit the **scripts** directory, then run:
+1. **init.py** : Before running the code, please insert your Canvas API key in the API_TOKEN variable, to allow access to the data uploaded within the MAST30034 LMS page. This script downloads all relevant merchant, customer, and transaction data.
+2. **external_data.py** : Downloads all necessary external datasets.
+
+Then visit the **notebooks** directory, then run:
 1. **data_preprocessing_1.ipynb** : Handles missing values and merging all data.
 2. **data_preprocessing_2.ipynb** : Aggregates the database with the external dataset containing unemployment rates as well as SA4 codes.
 3. **detecting_fraud_ipynb** : Introduces a fraud detection system and flags relevant transactions as fraud, additional preprocessing step to extract information from merchant tags.
