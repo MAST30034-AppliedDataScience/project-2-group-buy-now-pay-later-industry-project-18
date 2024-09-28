@@ -9,7 +9,7 @@
 # Project Structure
 * **data/tables**: Contains all unzipped datasets provided through the LMS, including transactions, consumer, and merchant information.
 * **data/curated**: Contains all curated datasets through data preprocessing and modelling.
-* **downloads**: Contains all downloaded external datasets that aren't provided through the LMS.
+* **data/external**: Contains all downloaded external datasets that aren't provided through the LMS.
 * **scripts**: Contains ETL scripts to download all datasets needed.
 * **notebooks**: Contains Jupyter Notebook files used for preprocessing and exploratory data analysis.
 * **plots**: Contains images and plots produced to help visualize data distributions and model evaluation.
