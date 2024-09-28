@@ -2,6 +2,10 @@
 # Industry Project 18
 **Members:**
 * Melissa Putri (1389438)
+* Zhaoxu Chen (1174019)
+* Yuanchen CAI (1301221)
+* Ziting Wang (1346793)
+* Zihan Wang (1128922)
 
 **Research Goal:** Build a merchant ranking system to determine the top 100 merchants to be included in the Buy Now, Pay Later program.
 **Timeline:** 2021 - 2022
