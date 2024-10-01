@@ -3,7 +3,7 @@
 **Members:**
 * Melissa Putri (1389438)
 * Zhaoxu Chen (1174019)
-* Yuanchen CAI (1301221)
+* Yuanchen Cai (1301221)
 * Ziting Wang (1346793)
 * Zihan Wang (1128922)
 
