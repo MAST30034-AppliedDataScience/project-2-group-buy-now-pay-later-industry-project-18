@@ -30,7 +30,7 @@ Python ver 3.11.5 was used in building this code.
 To run the pipeline please run the following notebooks sequentially.
 
 First, please visit the **scripts** directory, then run:
-1. **init.py** : Before running the code, please insert your Canvas API key in the API_TOKEN variable, to allow access to the data uploaded within the MAST30034 LMS page. This script downloads all relevant merchant, customer, and transaction data.
+1. **init.py** : Before running the code, **please insert your Canvas API key in the API_TOKEN variable**, to allow access to the data uploaded within the MAST30034 LMS page. This script downloads all relevant merchant, customer, and transaction data.
 2. **external_data.py** : Downloads all necessary external datasets.
 
 Then visit the **notebooks** directory, then run:
