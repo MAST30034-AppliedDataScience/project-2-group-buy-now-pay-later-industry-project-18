@@ -91,7 +91,7 @@ if __name__ == "__main__":
     download_and_unzip(zip_url1, download_zip_path1, extract_to_path1)
 
     # Step 5: After unzipping, extract 'Table 3' from the unzipped Excel file and save it as CSV
-    unzipped_excel_path = os.path.join(extract_to_path1, '1270055006_cg_postcode_2011_sa4_2011.xls')  # Change the file name if necessary
+    unzipped_excel_path = os.path.join(extract_to_path1, '1270055006_CG_POSTCODE_2011_SA4_2011.xls')  # Change the file name if necessary
     table3_df = read_excel_file(unzipped_excel_path, sheet_name='Table 3')
     
     # Save 'Table 3' to CSV
