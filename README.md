@@ -30,7 +30,7 @@ Python ver 3.11.5 was used in building this code.
 To run the pipeline please run the following notebooks sequentially.
 
 First, please visit the **scripts** directory, then run:
-1. **init.py** : Before running the code, **please insert your Canvas API key in the API_TOKEN variable**, to allow access to the data uploaded within the MAST30034 LMS page. This script downloads all relevant merchant, customer, and transaction data.
+1. **init.py** : Before running the code, **please insert your Canvas API key in the API_TOKEN variable**, to allow access to the data uploaded within the MAST30034 LMS page. API key should not be pushed to repository for security purposes. This script downloads all relevant merchant, customer, and transaction data.
 2. **external_data.py** : Downloads all necessary external datasets.
 
 Then visit the **notebooks** directory, then run:
@@ -42,8 +42,10 @@ Then visit the **notebooks** directory, then run:
 Then, please visit the **models** directory for the ranking systems:
 1. **RF_model.ipynb** : A random forest regressor model to forecast merchant monthly revenue then rank the merchants accordingly.
 2. **GBT_model.ipynb** : A gradient boosted tree model to forecast merchant monthly revenue then rank the merchants accordingly.
-3. **Logistic_reg.ipynb** : A logistic regression model to forecast merchant monthly revenue then rank the merchants accordingly.
-4. **XGBoost_model.ipynb** : A extreme gradient boosted tree model to forecast merchant monthly revenue then rank the merchants accordingly.
+3. **Logistic_reg.ipynb** : A logistic regression model to forecast merchant fraud probability then rank the merchants accordingly. This model is used to analyze feature correlations.
+4. **XGBoost_model.ipynb** : A extreme gradient boosted tree model to forecast merchant fraud probability then rank the merchants accordingly. This model is used to analyze feature correlations.
 5. **florist_model.ipynb** : A specific random forest regressor model for the florist segmentation to forecast returning customer ratio then ranking merchants accordingly.
 6. **furniture_model.ipynb** : A specific random forest regressor model for the furniture segmentation to forecast yearly total transactions.
 7. **computer_model.ipynb** : A specific random forest regressor model for the computer segmentation to forecast annual average order value.
+
+Finally, please re-visit the **notebooks** directory and run **final_summary.ipynb** to retreive the final findings from the ranking systems and see the final ranked merchants of top 100 overall and top 10 within segments.
