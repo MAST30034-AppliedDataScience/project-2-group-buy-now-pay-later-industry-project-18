@@ -17,7 +17,7 @@
 * **scripts**: Contains ETL scripts to download all datasets needed.
 * **notebooks**: Contains Jupyter Notebook files used for preprocessing and exploratory data analysis.
 * **plots**: Contains images and plots produced to help visualize data distributions and model evaluation.
-* **models**: Contains Jupyter Notebook files used to model the ranking system for overall merchant ranking as well as specified ones for several segments.
+* **models**: Contains Jupyter Notebook files used to model the ranking system for overall merchant ranking as well as specified ones for several segments. Also contains the metadata for the generated random forest and gradient boosted tree ranking system for evaluation purposes.
 
 # Setup and Requirements
 To run this project, ensure that the necessary Python packages are installed. You can install the required packages by running:
